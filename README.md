@@ -9,7 +9,7 @@ I really do not recommend anyone to use this tool. It was built as a simple, pri
 * Clone this repo.  
 * Use your favourite python editor to edit src/fbDownloader.py.
   * Set a PROJECT_NAME (I would suggest the name of your chat).
-  * Set a START_URL. See [how to get START_URL](#How-to-get-START_URL)
+  * Set a START_URL. See [how to get START_URL](#how-to-get-start_url)
   
 ## How to get a START_URL  
 Navigate to https://developers.facebook.com/tools/explorer/145634995501895/?method=GET&path=me%2Finbox&version=v2.3 (login if prompted).
