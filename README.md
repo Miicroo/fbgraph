@@ -13,3 +13,9 @@ I really do not recommend anyone to use this tool. It was built as a simple, pri
   
 ## How to get a START_URL  
 Navigate to https://developers.facebook.com/tools/explorer/145634995501895/?method=GET&path=me%2Finbox&version=v2.3 (login if prompted).
+
+
+
+
+
+Run with jsinspect (https://github.com/danielstjules/jsinspect)
