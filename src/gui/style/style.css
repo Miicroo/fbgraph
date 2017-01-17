@@ -1,0 +1,78 @@
+body{
+	font-family:"Roboto","Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+	background-color: #eeeeee;
+}
+
+h1,h2,h3,h4,h5,h6{
+	font-family:"Roboto","Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+	font-weight:700;
+	font-style:normal;
+	color:#262626;
+	text-rendering:optimizeLegibility;
+	margin-top:2em;
+	margin-bottom:.5em;
+	line-height:1.0625em
+}
+
+strong{
+	color:#262626;
+}
+
+#content{
+	background-color: #fff;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: #262626;
+}
+
+.legend {
+    fill: none;
+    stroke: black;
+    stroke-width: 2;
+}
+
+.legendText {
+    font-size: 10px;
+    color: black;
+    fill: black;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
+.axis--x path {
+}

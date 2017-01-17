@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Chat stats</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="style/style.css" />
+		
+		<script src="js/d3.min.js" type="text/javascript"></script>
+		<script src="js/d3-tip.js" type="text/javascript"></script>
+		
+		<script src="js/common.js" type="text/javascript"></script>
+		<script src="js/containerManager.js" type="text/javascript"></script>
+		<script src="generated/data.js" type="text/javascript"></script>
+		<script src="js/chartcreator.js" type="text/javascript"></script>
+		
+		<script language="javascript">
+			function setChatName() {
+				document.title = backend.getChatName() + " - Chat stats"
+				document.getElementById("chatName").innerText = backend.getChatName() + " stats";
+			}
+
+			function setParticipants() {
+				participants = "";
+				for(i = 0; i<backend.getUsers().length; i++) {
+					participants += "<a href=\"#"+backend.getUsers()[i].id+"\">"+backend.getUsers()[i].name+"</a></br>";
+				}
+				document.getElementById("participants").innerHTML = participants;
+			}
+
+			function setTotalNumberOfMsgs() {
+				document.getElementById("totalNumMsgs").innerText = backend.getTotalNumberOfMessages();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="content" class="center">
+			<center>
+				<h1 id="chatName"></h1>
+			</center>
+		
+			<h2>Overview</h2>
+			<h3>Participants</h3>
+			
+			<p>
+				<div id="participants"></div>
+			</p>
+			
+			<p>
+				<strong>Total number of messages: </strong><span id="totalNumMsgs"></span>
+			</p>
+			
+			<h3>Messages per user:</h3>
+			<div id="msgsPerUserChart"></div>
+			
+			<h3>Messages over time:</h3>
+			<div id="totalMsgsOverTimeChart" width="400" height="400"></div>			
+
+			<h3>Messages per month:</h3>
+			<div id="totalMsgsPerMonthChart" width="400" height="400"></div>
+<!--
+			<h3>Messages per weekday:</h3>
+			<canvas id="totalMsgsPerWeekDayChart" width="400" height="400"></canvas>
+			-->
+			<h3>Messages throughout the day:</h3>
+			<div id="totalMsgsPerTimeChart" width="400" height="400"></div>
+			<!--
+			<h3>Most common words:</h3>
+			<ul id="mostCommonWords">
+			</ul>
+			<canvas id="wordCloud" width="400" height="400"></canvas>
+
+			<div id="participantDiv">
+			</div>-->
+		</div>
+		
+		<script>
+			//setMessagesPerUser();
+			domReady(function() {
+				setChatName();
+				setParticipants();
+				setTotalNumberOfMsgs();
+				
+				chartCreator.createLineChart(backend.getMessagesPerTime(), totalMsgsPerTimeOptions);
+				chartCreator.createLineChart(backend.getMessagesOverTime(), totalMsgsOverTimeOptions);
+				
+				chartCreator.pieChart(pieChartOptions);
+				chartCreator.createBarChart(backend.getMessagesPerMonth(), totalMsgsPerMonthOptions);
+			});
+			
+			
+			
+			
+			
+			/*setTotalMsgsPerMonth();
+			setTotalMsgsPerWeekday();
+			setTotalMsgsPerTime();
+			setTotalMostCommonWords();
+			setTotalWordCloud();
+			
+			for(pIndex = 0; pIndex<chatStats.participants.length; pIndex++) {
+				initParticipant(chatStats.participants[pIndex]);
+			}
+			
+			for(pIndex = 0; pIndex<chatStats.participants.length; pIndex++) {
+				participant = chatStats.participants[pIndex];
+				setNumberOfMsgs(participant);
+				setMsgsOverTime(participant);
+				setMsgsPerMonth(participant);
+				setMsgsPerWeekday(participant);
+				setMsgsPerTime(participant);
+				setMostCommonWords(participant);
+				setWordCloud(participant);
+			}*/
+		</script>
+	</body>
+</html>

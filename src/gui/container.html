@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>C</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="style/style.css" />
+		<style type="text/css">
+			.containerHeader {
+				display: block;
+				text-align: right;
+				background: #c2c3c4;
+				background: -webkit-linear-gradient(#ffffff, #c2c3c4, #ffffff);
+				background: -o-linear-gradient(#ffffff, #c2c3c4, #ffffff);
+				background: -moz-linear-gradient(#ffffff, #c2c3c4, #ffffff);
+				background: linear-gradient(#ffffff, #c2c3c4, #ffffff);
+			}
+			.containerCloseLink {
+				color: black;
+				text-decoration: none;
+				text-transform: lowercase;
+			}
+		</style>
+		<script type="text/javascript">
+			function closeContainer(containerId) {
+				var element = document.getElementById(containerId);
+				element.parentNode.removeChild(element);
+			}
+			
+			function createContainer(config, name) {
+				var containerDiv = document.createElement('div');
+				containerDiv.id = name;
+				containerDiv.setAttribute('style', 'width:'+config.width+'px');
+				
+				var closeDiv = document.createElement('div');
+				closeDiv.id = name+'Close';
+				closeDiv.setAttribute('style', 'width:'+config.width+'px');
+				closeDiv.className += 'containerHeader';
+				
+				var closeLink = document.createElement('a');
+				closeLink.href = '#';
+				closeLink.onclick = function() {closeContainer(name);}
+				closeLink.className += 'containerCloseLink';
+				closeLink.innerText = 'X';
+				
+				var containerContent = document.createElement('div');
+				containerContent.id = name+'Content';
+				containerContent.setAttribute('style', 'width:'+config.width+'px');
+				
+				closeDiv.appendChild(closeLink);
+				
+				containerDiv.appendChild(closeDiv);
+				containerDiv.appendChild(containerContent);
+				
+				document.body.appendChild(containerDiv);
+				
+				return name;
+			}
+			
+			function setContainerContent(containerId, content) {
+				document.getElementById(containerId+'Content').innerHTML = content;
+			}
+		</script>
+	</head>
+	<body>
+		<div id="container" width="500">
+			<div id="containerClose" style="width:inherit;background-color:#ffff00">
+				<a href="#" onclick="closeContainer('container');" class="closeContainerClass">X</a>
+			</div>
+			<div id="containerContent" style="width:inherit;background-color:#0000ff">
+				<p>Some container info</p>
+			</div>
+		</div>
+	</body>
+</html>
