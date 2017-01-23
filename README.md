@@ -23,6 +23,5 @@ Navigate to https://developers.facebook.com/tools/explorer/145634995501895/?meth
 Run with jsinspect (https://github.com/danielstjules/jsinspect)
 
 
-
-
-https://defaultnamehere.tumblr.com/post/139351766005/graphing-when-your-facebook-friends-are-awake
+**Tips**
+If you liked this project you are probably gonna like [this one](https://defaultnamehere.tumblr.com/post/139351766005/graphing-when-your-facebook-friends-are-awake) even more (disclaimer: it is not mine).
