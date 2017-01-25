@@ -50,3 +50,21 @@ var domReady = function(callback) {
         }
     }
 };
+
+function merge(defaultObj, newObj) {
+	var clone = deepClone({}, defaultObj);
+	return deepClone(clone, newObj);
+}
+	
+function deepClone(oldObj, newObj) {
+	Object.keys(newObj).forEach(function(key) {
+		if(newObj[key] !== undefined) {
+			if(newObj[key].constructor === Object) {
+				oldObj[key] = deepClone(oldObj[key] || {}, newObj[key]);
+			} else {
+				oldObj[key] = newObj[key];
+			}
+		}
+	});
+	return oldObj;
+}

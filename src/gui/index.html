@@ -4,14 +4,14 @@
 		<title>Chat stats</title>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="style/style.css" />
+		<script src="generated/data.js" type="text/javascript"></script>
 		
 		<script src="js/d3.min.js" type="text/javascript"></script>
 		<script src="js/d3-tip.js" type="text/javascript"></script>
 		
 		<script src="js/common.js" type="text/javascript"></script>
-		<script src="js/containerManager.js" type="text/javascript"></script>
-		<script src="generated/data.js" type="text/javascript"></script>
-		<script src="js/chartcreator.js" type="text/javascript"></script>
+		<script src="js/chartCreator.js" type="text/javascript"></script>
+		<script src="js/chartDefinitions.js" type="text/javascript"></script>
 		
 		<script language="javascript">
 			function setChatName() {
@@ -83,7 +83,7 @@
 				chartCreator.createLineChart(backend.getMessagesPerTime(), totalMsgsPerTimeOptions);
 				chartCreator.createLineChart(backend.getMessagesOverTime(), totalMsgsOverTimeOptions);
 				
-				chartCreator.pieChart(pieChartOptions);
+				chartCreator.createPieChart(backend.getMessagesPerUser(), pieChartOptions);
 				chartCreator.createBarChart(backend.getMessagesPerMonth(), totalMsgsPerMonthOptions);
 			});
 			

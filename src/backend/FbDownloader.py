@@ -35,18 +35,17 @@ def saveData(datadump, filename):
         f.write(datadump)
 
 def makePath(directory):
-    path = os.path.join(os.getcwd(), directory)
+    path = os.path.join(os.getcwd(), '../data', directory)
     if(not os.path.isdir(path)):
         os.mkdir(path)
         
     return path
 
-def getExistingProjectFiles(projectName):
-    path = os.path.join(os.getcwd(), projectName)
+def getExistingProjectFiles(path):
     return [os.path.join(path, f) for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 
-def getNewestDownloadedMessageId(projectDir):
-    projectFiles = getExistingProjectFiles(projectDir)
+def getNewestDownloadedMessageId(path):
+    projectFiles = getExistingProjectFiles(path)
     if len(projectFiles) == 0:
         return None
     
@@ -86,7 +85,7 @@ def main():
     START_URL = "<YOUR_URL>"
     url = START_URL
     path = makePath(PROJECT_NAME)
-    newestMessageId = getNewestDownloadedMessageId(PROJECT_NAME);
+    newestMessageId = getNewestDownloadedMessageId(path);
 
     if newestMessageId is not None:
         print "Downloading until last message: " + newestMessageId+"\n\n"

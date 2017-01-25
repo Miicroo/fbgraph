@@ -2,7 +2,7 @@ from FbParser import MessageParser, DateTransformer, WordParser
 from StatsSaver import StatsSaver
   
 
-projectPath = '../taco'
+projectPath = '../data/Nika'
 chatName = projectPath[projectPath.rfind('/')+1:]
 
 statsSaver = StatsSaver()

@@ -18,7 +18,7 @@ var chartCreator = (function() {
 			padding:5
 		};
 		
-		var legendOptions = Object.assign(defaultOptions, svgOptions.legendOptions);
+		var legendOptions = merge(defaultOptions, svgOptions.legendOptions);
 
 		legendOptions.width = (svgOptions.width-svgOptions.radius*2) - (legendOptions.margins.left+legendOptions.margins.right);
 		legendOptions.x = (svgOptions.radius*2) + legendOptions.margins.left;
@@ -55,7 +55,7 @@ var chartCreator = (function() {
 	};
 	
 
-	self.pieChart = function(options) {
+	self.createPieChart = function(data, options) {
 		var parseData = function(inputArray, textField, valueField) {
 			var separatedData = {};
 			separatedData.text = inputArray.map(function(d) {
@@ -67,9 +67,9 @@ var chartCreator = (function() {
 			return separatedData;
 		}
 
-		var createPieChart = function(options) {
+		var makePieChart = function(data, options) {
 			//convert data into a format the pie layout can work with ie arrays of values only;
-			options.data = parseData(options.data, options.textField, options.valueField);
+			options.data = parseData(data, options.textField, options.valueField);
 
 			var outerRadius = options.radius;
 			var innerRadius = 0;
@@ -106,7 +106,7 @@ var chartCreator = (function() {
 			}
 		};
 		
-		createPieChart(options);
+		makePieChart(data, options);
 	};
 	
 	self.createLineChart = function(lineData, options) {
@@ -115,12 +115,14 @@ var chartCreator = (function() {
 			width: 400,
 			height: 400,
 			xAxis: {
+				domain: function(data) {return d3.extent(data, function(d) { return d.key; });},
 				transformer: function(d) {return d},
 				text: '',
 				scale: d3.scaleLinear(),
 				tickFormat: function(x) {return x;}
 			},
 			yAxis: {
+				domain: function(data) {return d3.extent(data, function(d) { return d.value; });},
 				transformer: function(d) {return d},
 				text: '',
 				scale: d3.scaleLinear(),
@@ -141,7 +143,7 @@ var chartCreator = (function() {
 			}
 		};
 		
-		options = Object.assign(defaultOptions, options);
+		options = merge(defaultOptions, options);
 		var svg = d3.select(options.target)
 					.append('svg')
 					.attr('width', options.width)
@@ -176,8 +178,8 @@ var chartCreator = (function() {
 			return a.key-b.key;
 		});
 		
-		x.domain(d3.extent(data, function(d) { return d.key; }));
-		y.domain(d3.extent(data, function(d) { return d.value; }));
+		x.domain(options.xAxis.domain(data));
+		y.domain(options.yAxis.domain(data));
 
 		var tip = d3.tip()
 			.attr('class', 'd3-tip')
@@ -251,7 +253,7 @@ var chartCreator = (function() {
 			}
 		};
 		
-		options = Object.assign(defaultOptions, defaultOptions);
+		options = merge(defaultOptions, defaultOptions);
 		
 		var svg = d3.select(options.target)
 					.append('svg')

@@ -1,6 +1,6 @@
 var totalMsgsPerTimeOptions = {
 	target: '#totalMsgsPerTimeChart',
-	width: 900,
+	width: 700,
 	height: 400,
 	xAxis: {
 		transformer: function(d) {var parse = d3.timeParse("%H:%M"); return parse(d.date);},
@@ -24,7 +24,7 @@ var totalMsgsPerTimeOptions = {
 
 var totalMsgsOverTimeOptions = {
 	target: '#totalMsgsOverTimeChart',
-	width: 900,
+	width: 700,
 	height: 400,
 	xAxis: {
 		transformer: function(d) {var parse = d3.timeParse("%Y-%m-%d %H:%M"); return parse(d.date);},
@@ -48,7 +48,7 @@ var totalMsgsOverTimeOptions = {
 
 var totalMsgsPerMonthOptions = {
 	target: '#totalMsgsPerMonthChart',
-	width: 900,
+	width: 700,
 	height: 400,
 	xAxis: {
 		transformer: function(d) {return d.date},
@@ -79,7 +79,6 @@ var pieChartOptions = {
 		keyHeight: 25,
 		padding: 5
 	},
-	data: backend.getMessagesPerUser(),
 	valueField: "count",
 	textField: "name",
 	target: "#msgsPerUserChart"
