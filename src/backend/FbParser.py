@@ -33,8 +33,9 @@ class MessageParser:
     def parse(self):
         filepath = join(getcwd(), self.projectPath)
         files = [join(filepath, f) for f in listdir(filepath) if isfile(join(filepath, f))]
-        
-        for jsonFile in files:
+
+        # Iterate with newest first to get users
+        for jsonFile in reversed(files):
             with open(jsonFile) as openJsonFile:
                 jsonData = json.load(openJsonFile)
 
