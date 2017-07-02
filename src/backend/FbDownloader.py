@@ -118,7 +118,7 @@ def main():
         if isLastFile:
             filename = "00000000T000000-default"
         else:
-            # 3.1) Check if we all or a subset of the messages are new
+            # 3.1) Check if all or a subset of the messages are new
             if containsNewestMessage(messages, newestMessageId):
                 isLastFile = True
                 newMessages = getMessagesNewerThan(messages, newestMessageId)

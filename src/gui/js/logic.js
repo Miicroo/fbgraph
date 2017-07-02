@@ -70,35 +70,33 @@ function getAllColors(bgA=0.8) {
 
 
 function setChatName() {
-	document.title = chatStats.chatName + " - Chat stats"
-	document.getElementById("chatName").innerText = chatStats.chatName + " stats";
+	document.title = backend.getChatName() + " - Chat stats"
+	document.getElementById("chatName").innerText = backend.getChatName() + " stats";
 }
 
 function setParticipants() {
 	participants = "";
-	for(i = 0; i<chatStats.participants.length; i++) {
-		participants += "<a href=\"#"+chatStats.participants[i].id+"\">"+chatStats.participants[i].name+"</a></br>";
-	}
+	backend.getUsers().forEach(user => participants += "<a href=\"#"+user.id+"\">"+user.name+"</a></br>");
 	document.getElementById("participants").innerHTML = participants;
 }
 
 function setTotalNumberOfMsgs() {
-	document.getElementById("totalNumMsgs").innerText = chatStats.totalNumMsgs;
+	document.getElementById("totalNumMsgs").innerText = backend.getTotalNumberOfMessages();
 }
 
 function setMessagesPerUser() {
 	labels = []
 	actualData = []
 			
-	for(i = 0; i<chatStats.msgsPerUser.length; i++) {
-		labels.push(chatStats.msgsPerUser[i].user);
-		actualData.push(chatStats.msgsPerUser[i].count);
-	}
+	backend.getMessagesPerUser().forEach(data => {
+		labels.push(data.name);
+		actualData.push(data.count);
+	});
 	
 	colors = getAllColors(1);
-	mainColors = []
-	lightColors = []
-	for(i = 0; i<chatStats.participants.length; i++) {
+	mainColors = [];
+	lightColors = [];
+	for(i = 0; i<backend.getUsers().length; i++) {
 		mainColors.push(colors[i].bgColor);
 		lightColors.push(colors[i].hoverColor);
 	}
@@ -110,10 +108,10 @@ function setTotalMsgsOverTime() {
 	labels = []
 	actualData = []
 			
-	for(i = 0; i<chatStats.msgsOverTime.length; i++) {
-		labels.push(chatStats.msgsOverTime[i].date);
-		actualData.push(chatStats.msgsOverTime[i].count);
-	}
+	backend.getMessagesOverTime().forEach(msgsOverTime => {
+		labels.push(msgsOverTime.date);
+		actualData.push(msgsOverTime.count);
+	});
 	
 	options = getTimeScale("YYYY-MM-DDTHH:mm", "YYYY-MM-DD");
 	createChartFromColors('line', 'totalMsgsOverTimeChart', 'Messages over time', labels, actualData, getAllColors()[0], options);
@@ -122,11 +120,11 @@ function setTotalMsgsOverTime() {
 function setTotalMsgsPerMonth() {
 	labels = []
 	actualData = []
-			
-	for(i = 0; i<chatStats.msgsPerMonth.length; i++) {
-		labels.push(chatStats.msgsPerMonth[i].date);
-		actualData.push(chatStats.msgsPerMonth[i].count);
-	}
+		
+	backend.getMessagesPerMonth().forEach(msgsPerMonth => {
+		labels.push(msgsPerMonth.date);
+		actualData.push(msgsPerMonth.count);
+	});
 	
 	createChartFromColors('bar', 'totalMsgsPerMonthChart', 'Messages per month', labels, actualData, getAllColors()[1], null);
 }
@@ -134,11 +132,11 @@ function setTotalMsgsPerMonth() {
 function setTotalMsgsPerWeekday() {
 	labels = []
 	actualData = []
-			
-	for(i = 0; i<chatStats.msgsPerWeekday.length; i++) {
-		labels.push(chatStats.msgsPerWeekday[i].date);
-		actualData.push(chatStats.msgsPerWeekday[i].count);
-	}
+	
+	backend.getMessagesPerWeekday().forEach(msgsPerWeekday => {
+		labels.push(msgsPerWeekday.date);
+		actualData.push(msgsPerWeekday.count);
+	});
 	
 	createChartFromColors('bar', 'totalMsgsPerWeekDayChart', 'Messages per weekday', labels, actualData, getAllColors()[2], null);
 }
@@ -147,46 +145,47 @@ function setTotalMsgsPerTime() {
 	labels = []
 	actualData = []
 			
-	for(i = 0; i<chatStats.msgsPerTime.length; i++) {
-		labels.push(chatStats.msgsPerTime[i].date);
-		actualData.push(chatStats.msgsPerTime[i].count);
-	}
+	backend.getMessagesPerTime().sort((a, b) => a.date.localeCompare(b.date)).forEach(msgsPerTime => {
+		labels.push(msgsPerTime.date);
+		actualData.push(msgsPerTime.count);
+	});
 	
 	createChartFromColors('line', 'totalMsgsPerTimeChart', 'Messages per minute', labels, actualData, getAllColors()[3], getTimeScale("HH:mm", "HH:mm"));
 }
 
 function setTotalMostCommonWords() {
 	var list = "";
-	for(i = 0; i<chatStats.mostCommonWords.length; i++) {
-		list += "<li>"+chatStats.mostCommonWords[i].word+" <i>"+chatStats.mostCommonWords[i].count+"</i></li>";
-	}
+	backend.getMostCommonWords().forEach(wordCount => {
+		list += "<li>"+wordCount.word+" <i>"+wordCount.count+"</i></li>";
+	});
+
 	document.getElementById("mostCommonWords").innerHTML = list;
 }
 
 function setTotalWordCloud() {
 	labels = []
 	actualData = []
-			
-	for(i = 0; i<chatStats.wordCloud.length; i++) {
-		labels.push(chatStats.wordCloud[i][0]);
-		actualData.push(chatStats.wordCloud[i][1]);
-	}
+	
+	backend.getWordCloud().forEach(wc => {
+		labels.push(wc.word);
+		actualData.push(wc.count);
+	});
+
 	createChartFromColors('radar', 'wordCloud', 'Wordcloud', labels, actualData, getAllColors()[4], null);
 }
 
 function setNumberOfMsgs(participant) {
-	document.getElementById("user"+participant.id+"_totalNumMsgs").innerText = chatStats["user"+participant.id+"_totalNumMsgs"];
+	document.getElementById("user"+participant.id+"_totalNumMsgs").innerText = backend.getTotalNumberOfMessagesForUser(participant.id);
 }
 
 function setMsgsOverTime(participant) {
 	labels = []
 	actualData = []
-	ds = chatStats["user"+participant.id+"_msgsOverTime"];
-			
-	for(i = 0; i<ds.length; i++) {
-		labels.push(ds[i].date);
-		actualData.push(ds[i].count);
-	}
+	
+	backend.getMessagesOverTimeForUser(participant.id).forEach(data => {
+		labels.push(data.date);
+		actualData.push(data.count);
+	});
 	
 	options = getTimeScale("YYYY-MM-DDTHH:mm", "YYYY-MM-dd");
 	createChartFromColors('line', 'user'+participant.id+'_totalMsgsOverTimeChart', 'Messages over time', labels, actualData, getAllColors()[0], options);
@@ -195,12 +194,11 @@ function setMsgsOverTime(participant) {
 function setMsgsPerMonth(participant) {
 	labels = []
 	actualData = []
-	ds = chatStats["user"+participant.id+"_msgsPerMonth"];
-			
-	for(i = 0; i<ds.length; i++) {
-		labels.push(ds[i].date);
-		actualData.push(ds[i].count);
-	}
+	
+	backend.getMessagesPerMonthForUser(participant.id).forEach(data => {
+		labels.push(data.date);
+		actualData.push(data.count);
+	});
 	
 	createChartFromColors('bar', 'user'+participant.id+'_totalMsgsPerMonthChart', 'Messages per month', labels, actualData, getAllColors()[1], null);
 }
@@ -208,12 +206,11 @@ function setMsgsPerMonth(participant) {
 function setMsgsPerWeekday(participant) {
 	labels = []
 	actualData = []
-	ds = chatStats["user"+participant.id+"_msgsPerWeekday"];
-			
-	for(i = 0; i<ds.length; i++) {
-		labels.push(ds[i].date);
-		actualData.push(ds[i].count);
-	}
+	
+	backend.getMessagesPerWeekdayForUser(participant.id).forEach(data => {
+		labels.push(data.date);
+		actualData.push(data.count);
+	});	
 	
 	createChartFromColors('bar', 'user'+participant.id+'_totalMsgsPerWeekDayChart', 'Messages per weekday', labels, actualData, getAllColors()[2], null);
 }
@@ -221,35 +218,34 @@ function setMsgsPerWeekday(participant) {
 function setMsgsPerTime(participant) {
 	labels = []
 	actualData = []
-	ds = chatStats["user"+participant.id+"_msgsPerTime"];
-			
-	for(i = 0; i<ds.length; i++) {
-		labels.push(ds[i].date);
-		actualData.push(ds[i].count);
-	}
+	
+	backend.getMessagesPerTimeForUser(participant.id).sort((a, b) => a.date.localeCompare(b.date)).forEach(data => {
+		labels.push(data.date);
+		actualData.push(data.count);
+	});
 	
 	createChartFromColors('line', 'user'+participant.id+'_totalMsgsPerTimeChart', 'Messages per minute', labels, actualData, getAllColors()[3], getTimeScale('HH:mm', 'HH:mm'));
 }
 
 function setMostCommonWords(participant) {
 	var list = "";
-	var ds = chatStats['user'+participant.id+'_mostCommonWords'];
-	for(i = 0; i<ds.length; i++) {
-		list += "<li>"+ds[i].word+" <i>"+ds[i].count+"</i></li>";
-	}
+
+	backend.getMostCommonWordsForUser(participant.id).forEach(data => {
+		list += "<li>"+data.word+" <i>"+data.count+"</i></li>";
+	});
+	
 	document.getElementById('user'+participant.id+'_mostCommonWords').innerHTML = list;
 }
 
 function setWordCloud(participant) {
-	labels = [];
-	actualData = [];
-	var ds = chatStats['user'+participant.id+'_wordCloud'];
-			
-	for(i = 0; i<ds.length; i++) {
-		labels.push(ds[i][0]);
-		actualData.push(ds[i][1]);
-	}
+	labels = []
+	actualData = []
 	
+	backend.getWordCloudForUser(participant.id).forEach(data => {
+		labels.push(data.word);
+		actualData.push(data.count);
+	});
+		
 	createChartFromColors('radar', 'user'+participant.id+'_wordCloud', 'Wordcloud', labels, actualData, getAllColors()[4], null);
 }
 

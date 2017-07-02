@@ -19,7 +19,7 @@ statsSaver.setMessagesOverTime(dt.getAggregatedMessageCountByDate(messageParser.
 statsSaver.setMessagesPerMonth(dt.getMessageCountByDate(messageParser.getMessages(), '%Y-%m'))
 statsSaver.setMessagesPerWeekday(dt.getMessageCountByDate(messageParser.getMessages(), '%A'))
 statsSaver.setMessagesPerTime(dt.getMessageCountByDate(messageParser.getMessages(), '%H:%M'))
-statsSaver.setMostCommonWords(wordParser.getWords(messageParser.getMessages()))
+statsSaver.setMostCommonWords(wordParser.getWords(messageParser.getMessages(), 20))
 statsSaver.setWordCloud(wordParser.getWords(messageParser.getMessages(), 20))
 
 for userId in messageParser.getUsers():
@@ -29,8 +29,8 @@ for userId in messageParser.getUsers():
     statsSaver.setMessagesPerMonthForUser(dt.getMessageCountByDate(userMessages, '%Y-%m'), userId)
     statsSaver.setMessagesPerWeekdayForUser(dt.getMessageCountByDate(userMessages, '%A'), userId)
     statsSaver.setMessagesPerTimeForUser(dt.getMessageCountByDate(userMessages, '%H:%M'), userId)
-    statsSaver.setMostCommonWordsForUser(wordParser.getWords(messageParser.getMessages()), userId)
-    statsSaver.setWordCloudForUser(wordParser.getWords(messageParser.getMessages(), 20), userId)
+    statsSaver.setMostCommonWordsForUser(wordParser.getWords(userMessages, 20), userId)
+    statsSaver.setWordCloudForUser(wordParser.getWords(userMessages, 20), userId)
     
 statsSaver.save()
 

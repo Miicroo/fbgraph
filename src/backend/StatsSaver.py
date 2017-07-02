@@ -100,7 +100,7 @@ class StatsSaver:
         getters += self.__generateGetter__(StatsSaver.CHATNAME, '', 'generalStats', StatsSaver.CHATNAME, '\'\'')
         getters += self.__generateGetter__(StatsSaver.USERS, '', 'generalStats', StatsSaver.USERS, '[]')
         getters += self.__generateGetter__(StatsSaver.TOTAL_NUM_MSGS, '', 'generalStats', StatsSaver.TOTAL_NUM_MSGS, '0')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_USER, '', 'generalStats', StatsSaver.MSGS_PER_USER, '{}')
+        getters += self.__generateGetter__(StatsSaver.MSGS_PER_USER, '', 'generalStats', StatsSaver.MSGS_PER_USER, '[]')
         getters += self.__generateGetter__(StatsSaver.MSGS_OVER_TIME, '', 'generalStats', StatsSaver.MSGS_OVER_TIME, '[]')
         getters += self.__generateGetter__(StatsSaver.MSGS_PER_MONTH, '', 'generalStats', StatsSaver.MSGS_PER_MONTH, '[]')
         getters += self.__generateGetter__(StatsSaver.MSGS_PER_WEEKDAY, '', 'generalStats', StatsSaver.MSGS_PER_WEEKDAY, '[]')
