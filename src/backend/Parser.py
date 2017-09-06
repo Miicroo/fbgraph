@@ -83,11 +83,11 @@ def json_encode(py_obj):
         return list(py_obj)
     raise TypeError('{} is not JSON serializable'.format(repr(py_obj)))
 
-def py_to_json(py_obj, name='../messages.json'):
+def py_to_json(py_obj, name='../data/messages.json'):
     with open(name, 'w') as f:
         json.dump(py_obj, f, default=json_encode, indent=2)
 
 if __name__ == "__main__":
-    with open('../messages.htm', "rb") as f:
+    with open('../data/messages.htm', "rb") as f:
         chat = html_to_py(f.read().decode('utf-8'))
         py_to_json(chat)
