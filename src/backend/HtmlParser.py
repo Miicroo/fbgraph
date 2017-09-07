@@ -45,7 +45,7 @@ class HtmlParser(object):
         if possible_str is None:
             return None
         else:
-            return possible_str.encode('utf-8')
+            return possible_str
 
     def __parse_date__(self, date_str):
         date_time_str = self.__remove_timezone__(date_str)
