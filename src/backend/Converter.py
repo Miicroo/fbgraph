@@ -1,5 +1,7 @@
 import json
 
+from datetime import datetime as dt
+
 from Message import Message
 from MessageThread import MessageThread
 from Chat import Chat
@@ -13,7 +15,7 @@ class Converter(object):
         
         for thread in py_chat.threads:
             filename = self.__thread_people_as_string__(thread)
-            valid_filename = filename[:255]
+            valid_filename = filename[:245]
             full_path = self.__OUTPUT_DIR__ + valid_filename + '.json'
             with open(full_path, 'w') as f:
                 json.dump(thread, f, default=self.__json_encode__, indent=2)
@@ -21,7 +23,8 @@ class Converter(object):
     def __thread_people_as_string__(self, thread):
         str_repr = ''
         for person in thread.people:
-            str_repr += person + '_'
+            name = person.decode('iso-8859-1').replace(' ', '_')
+            str_repr +=  name + '_'
         return str_repr[:-1]
 
     def py_to_json(self, py_obj, name='messages.json'):
