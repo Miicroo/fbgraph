@@ -9,7 +9,7 @@ fbgraph is a messaging statistics app for facebook chats.
 * From src/backend, run MessageParserMain.py
 * All your chats will be parsed and put into separate .json-files in src/data
 ### Generating charts
-* From src/backend, run ChartGenerator.py
+* From src/backend, run ChartGeneratorMain.py
 * You are prompted to choose which chat you would like to generate data for
 * View the GUI [here](src/gui/index.html)
 
