@@ -15,7 +15,7 @@ class Converter(object):
         
         for thread in py_chat.threads:
             filename = self.__thread_people_as_string__(thread)
-            valid_filename = filename[:200]
+            valid_filename = filename[:190]
             full_path = self.__OUTPUT_DIR__ + valid_filename + '.json'
             with open(full_path, 'w') as f:
                 json.dump(thread, f, default=self.__json_encode__, indent=2)
@@ -23,8 +23,7 @@ class Converter(object):
     def __thread_people_as_string__(self, thread):
         str_repr = ''
         for person in thread.people:
-            name = person.replace(' ', '_')
-            print name
+            name = person.replace(' ', '_').replace('-', '_').replace('*', '_').replace('<', '_')
             str_repr +=  name + '_'
         return str_repr[:-1]
 
