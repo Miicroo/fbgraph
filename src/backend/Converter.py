@@ -2,9 +2,9 @@ import json
 
 from datetime import datetime as dt
 
-from Message import Message
-from MessageThread import MessageThread
-from Chat import Chat
+from core.Message import Message
+from core.MessageThread import MessageThread
+from core.Chat import Chat
 
 class Converter(object):
     
