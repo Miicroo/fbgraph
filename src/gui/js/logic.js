@@ -97,8 +97,8 @@ function setMessagesPerUser() {
 	mainColors = [];
 	lightColors = [];
 	for(i = 0; i<backend.getUsers().length; i++) {
-		mainColors.push(colors[i].bgColor);
-		lightColors.push(colors[i].hoverColor);
+		mainColors.push(colors[i%colors.length].bgColor);
+		lightColors.push(colors[i%colors.length].hoverColor);
 	}
 	createChart('pie', 'msgsPerUserChart', 'Messages per user', labels, actualData, mainColors, [], lightColors, [], null);
 }
