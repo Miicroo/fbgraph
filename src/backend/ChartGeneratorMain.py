@@ -8,5 +8,3 @@ if __name__ == "__main__":
     chart_generator = ChartGenerator(chat_file)
     chart_generator.generate_chart_stats()
 
-    
-    

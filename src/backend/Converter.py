@@ -43,7 +43,7 @@ class Converter(object):
                     'date_time': py_obj.date_time,
                     'sender': py_obj.sender}
         elif isinstance(py_obj, dt):
-            return py_obj.strftime('%A, %B %d, %Y at %I:%M%p %Z')
+            return py_obj.strftime('%A, %B %d, %Y at %I:%M%p')
         elif isinstance(py_obj, set):
             return list(py_obj)
         raise TypeError('{} is not JSON serializable'.format(repr(py_obj)))
