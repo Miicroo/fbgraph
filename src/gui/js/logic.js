@@ -250,7 +250,7 @@ function setWordCloud(participant) {
 }
 
 function initParticipant(participant) {
-	var container = document.getElementById("participantDiv");
+	var container = document.getElementById(participant.id);
 	
 	var content = "<h2 id=\""+participant.id+"\">"+participant.name+"</h2>";
 	content += "<p><strong>Total number of messages: </strong><span id=\"user"+participant.id+"_totalNumMsgs\"></span></p>";

@@ -1,8 +1,12 @@
-<!DOCTYPE html>
 <html>
 	<head>
 		<title>Chat stats</title>
-		<meta charset="UTF-8" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script src="js/jquery/jquery.3.2.1.js"></script>
+		<script src="js/bootstrap/bootstrap.3.3.7.js"></script>
+		<link rel="stylesheet" href="js/bootstrap/bootstrap.3.3.7.css">
 		<link rel="stylesheet" href="style/style.css" />
 		
 		<script src="generated/data.js" type="text/javascript"></script>
@@ -17,70 +21,117 @@
 		</script>
 	</head>
 	<body>
-		<div id="content" class="center">
-			<center>
-				<h1 id="chatName"></h1>
-			</center>
-			<h2>Overview</h2>
-			<h3>Participants</h3>
-			
-			<p>
-				<div id="participants"></div>
-			</p>
-			
-			<p>
-				<strong>Total number of messages: </strong><span id="totalNumMsgs"></span>
-			</p>
-			
-			<h3>Messages per user:</h3>
-			<canvas id="msgsPerUserChart" width="400" height="400"></canvas>
-			
-			<h3>Messages over time:</h3>
-			<canvas id="totalMsgsOverTimeChart" width="400" height="400"></canvas>			
+		<div class="container center" id="content">
+			<ul class="nav nav-pills">
+		    	<li class="active"><a data-toggle="pill" href="#home">Overview</a></li>
+		  	</ul>
+		  	<div class="tab-content">
+		    	<div id="home" class="tab-pane fade in active">
+					<center>
+						<h1 id="chatName"></h1>
+					</center>
+					<h3>Participants</h3>
+					
+					<p><div id="participants"></div></p>
+					
+					<p><strong>Total number of messages: </strong><span id="totalNumMsgs"></span></p>
+					
+					<h3>Messages per user:</h3>
+					<canvas id="msgsPerUserChart" width="400" height="400"></canvas>
+					
+					<h3>Messages over time:</h3>
+					<canvas id="totalMsgsOverTimeChart" width="400" height="400"></canvas>			
 
-			<h3>Messages per month:</h3>
-			<canvas id="totalMsgsPerMonthChart" width="400" height="400"></canvas>
+					<h3>Messages per month:</h3>
+					<canvas id="totalMsgsPerMonthChart" width="400" height="400"></canvas>
 
-			<h3>Messages per weekday:</h3>
-			<canvas id="totalMsgsPerWeekDayChart" width="400" height="400"></canvas>
+					<h3>Messages per weekday:</h3>
+					<canvas id="totalMsgsPerWeekDayChart" width="400" height="400"></canvas>
 
-			<h3>Messages throughout the day:</h3>
-			<canvas id="totalMsgsPerTimeChart" width="400" height="400"></canvas>
+					<h3>Messages throughout the day:</h3>
+					<canvas id="totalMsgsPerTimeChart" width="400" height="400"></canvas>
 
-			<h3>Most common words:</h3>
-			<ul id="mostCommonWords">
-			</ul>
-			<canvas id="wordCloud" width="400" height="400"></canvas>
+					<h3>Most common words:</h3>
+					<ul id="mostCommonWords"></ul>
 
-			<div id="participantDiv">
-			</div>
+					<canvas id="wordCloud" width="400" height="400"></canvas>
+				<script type="text/javascript">
+					setChatName();
+					setParticipants();
+					setTotalNumberOfMsgs();
+					setMessagesPerUser();
+					setTotalMsgsOverTime();
+					setTotalMsgsPerMonth();
+					setTotalMsgsPerWeekday();
+					setTotalMsgsPerTime();
+					setTotalMostCommonWords();
+					setTotalWordCloud();
+				</script>
+	    	</div>
 		</div>
-		
-		<script>
-			setChatName();
-			setParticipants();
-			setTotalNumberOfMsgs();
-			setMessagesPerUser();
-			setTotalMsgsOverTime();
-			setTotalMsgsPerMonth();
-			setTotalMsgsPerWeekday();
-			setTotalMsgsPerTime();
-			setTotalMostCommonWords();
-			setTotalWordCloud();
-			
-			backend.getUsers().forEach(participant => {
-				initParticipant(participant);
-			});
 
-			backend.getUsers().forEach(participant => {
-				setNumberOfMsgs(participant);
-				setMsgsOverTime(participant);
-				setMsgsPerMonth(participant);
-				setMsgsPerWeekday(participant);
-				setMsgsPerTime(participant);
-				setMostCommonWords(participant);
-				setWordCloud(participant);
-			});
+		<script type="text/javascript">
+
+	    	function addNavPillForParticipant(participant) {
+	    		const pill = document.createElement('li');
+	    		const link = document.createElement('a');
+	    		link.setAttribute('data-toggle', 'pill');
+	    		link.setAttribute('href', participant.id);
+	    		link.innerText = participant.name;
+	    		link.onclick = function() {loadParticipantData(participant)};
+
+	    		pill.appendChild(link);
+
+	    		const pillContainer = document.querySelector('.nav.nav-pills');
+	    		pillContainer.appendChild(pill);
+	    	}
+
+	    	function loadParticipantData(participant) {
+	    		if(!isLoaded(participant)) {
+		    		initParticipant(participant);
+					
+					setNumberOfMsgs(participant);
+					setMsgsOverTime(participant);
+					setMsgsPerMonth(participant);
+					setMsgsPerWeekday(participant);
+					setMsgsPerTime(participant);
+					setMostCommonWords(participant);
+					setWordCloud(participant);
+				}
+
+				setParticipantDivAsActive(participant);
+	    	}
+
+	    	function isLoaded(participant) {
+	    		return document.querySelector(`#${participant.id}`).childElementCount > 0;
+	    	}
+
+	    	function setParticipantDivAsActive(participant) {
+	    		const activeTabs = Array.from(document.querySelectorAll('.tab-content > .active'));
+				activeTabs.forEach(tab => {
+					tab.classList.remove('in');
+					tab.classList.remove('active');
+				});
+				const participantDiv = document.querySelector(`#${participant.id}`);
+				participantDiv.classList.add('in');
+				participantDiv.classList.add('active');
+	    	}
+
+	    	function addDataDivForParticipant(participant) {
+	    		const div = document.createElement('div');
+	    		div.id = participant.id;
+	    		let classes = ['tab-pane', 'fade'];
+	    		div.classList.add(...classes);
+	    		div.style.padding = '25px 0px 0px 0px';
+
+	    		const container = document.querySelector('.tab-content');
+	    		container.appendChild(div);
+	    	}
+
+	    	backend.getUsers().forEach(participant => {
+	    		addNavPillForParticipant(participant);
+	    		addDataDivForParticipant(participant);
+	    	});
 		</script>
 	</body>
 </html>

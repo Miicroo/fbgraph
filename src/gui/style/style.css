@@ -1,6 +1,8 @@
 body{
 	font-family:"Roboto","Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
 	background-color: #eeeeee;
+	margin-top:0.5em;
+	margin-bottom:0.5em;
 }
 
 h1,h2,h3,h4,h5,h6{
@@ -20,6 +22,7 @@ strong{
 
 #content{
 	background-color: #fff;
+	border-radius: 10px;
 }
 
 .center {
