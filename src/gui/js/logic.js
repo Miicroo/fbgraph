@@ -68,18 +68,6 @@ function getAllColors(bgA=0.8) {
 	return colors;
 }
 
-
-function setChatName() {
-	document.title = backend.getChatName() + " - Chat stats"
-	document.getElementById("chatName").innerText = backend.getChatName() + " stats";
-}
-
-function setParticipants() {
-	participants = "";
-	backend.getUsers().forEach(user => participants += "<a href=\"#"+user.id+"\">"+user.name+"</a></br>");
-	document.getElementById("participants").innerHTML = participants;
-}
-
 function setTotalNumberOfMsgs() {
 	document.getElementById("totalNumMsgs").innerText = backend.getTotalNumberOfMessages();
 }
@@ -100,9 +88,12 @@ function setMessagesPerUser() {
 		mainColors.push(colors[i%colors.length].bgColor);
 		lightColors.push(colors[i%colors.length].hoverColor);
 	}
-	createChart('pie', 'msgsPerUserChart', 'Messages per user', labels, actualData, mainColors, [], lightColors, [], null);
+	options = {
+		'legend' : {'display' : true},
+		'title': {'display' : true, 'text': 'Messages per user'}
+    };
+	createChart('horizontalBar', 'msgsPerUserChart', 'Messages per user', labels, actualData, mainColors, [], lightColors, [], options);
 }
-
 
 function setTotalMsgsOverTime() {
 	labels = []
@@ -113,7 +104,7 @@ function setTotalMsgsOverTime() {
 		actualData.push(msgsOverTime.count);
 	});
 	
-	options = getTimeScale("YYYY-MM-DDTHH:mm", "YYYY-MM-DD");
+	options = getTimeScale("YYYY-MM-DDTHH:mm", "MMMM Do YYYY");
 	createChartFromColors('line', 'totalMsgsOverTimeChart', 'Messages over time', labels, actualData, getAllColors()[0], options);
 }
 
@@ -187,7 +178,7 @@ function setMsgsOverTime(participant) {
 		actualData.push(data.count);
 	});
 	
-	options = getTimeScale("YYYY-MM-DDTHH:mm", "YYYY-MM-dd");
+	options = getTimeScale("YYYY-MM-DDTHH:mm", "MMMM Do YYYY");
 	createChartFromColors('line', 'user'+participant.id+'_totalMsgsOverTimeChart', 'Messages over time', labels, actualData, getAllColors()[0], options);
 }
 
@@ -252,14 +243,13 @@ function setWordCloud(participant) {
 function initParticipant(participant) {
 	var container = document.getElementById(participant.id);
 	
-	var content = "<h2 id=\""+participant.id+"\">"+participant.name+"</h2>";
-	content += "<p><strong>Total number of messages: </strong><span id=\"user"+participant.id+"_totalNumMsgs\"></span></p>";
-	content += "<h3>Messages over time:</h3><canvas id=\"user"+participant.id+"_totalMsgsOverTimeChart\" width=\"400\" height=\"400\"></canvas>";			
-	content += "<h3>Messages per month:</h3><canvas id=\"user"+participant.id+"_totalMsgsPerMonthChart\" width=\"400\" height=\"400\"></canvas>";
-	content += "<h3>Messages per weekday:</h3><canvas id=\"user"+participant.id+"_totalMsgsPerWeekDayChart\" width=\"400\" height=\"400\"></canvas>";
-	content += "<h3>Messages throughout the day:</h3><canvas id=\"user"+participant.id+"_totalMsgsPerTimeChart\" width=\"400\" height=\"400\"></canvas>";
+	content = "<h3>Total number of messages: </h3><span id=\"user"+participant.id+"_totalNumMsgs\"></span>";
+	content += "<h3>Messages over time:</h3><canvas id=\"user"+participant.id+"_totalMsgsOverTimeChart\" width=\"760\" height=\"760\"></canvas>";			
+	content += "<h3>Messages per month:</h3><canvas id=\"user"+participant.id+"_totalMsgsPerMonthChart\" width=\"760\" height=\"760\"></canvas>";
+	content += "<h3>Messages per weekday:</h3><canvas id=\"user"+participant.id+"_totalMsgsPerWeekDayChart\" width=\"760\" height=\"760\"></canvas>";
+	content += "<h3>Messages throughout the day:</h3><canvas id=\"user"+participant.id+"_totalMsgsPerTimeChart\" width=\"760\" height=\"760\"></canvas>";
 	content += "<h3>Most common words:</h3><ul id=\"user"+participant.id+"_mostCommonWords\"></ul>";
-	content += "<canvas id=\"user"+participant.id+"_wordCloud\" width=\"400\" height=\"400\"></canvas>";
+	content += "<canvas id=\"user"+participant.id+"_wordCloud\" width=\"760\" height=\"760\"></canvas>";
 	
 	container.innerHTML += content;
 }

@@ -4,15 +4,15 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<!-- External libs -->
+		<script src="js/chartjs/moment.js" type="text/javascript"></script>
+		<script src="js/chartjs/chartjs.js" type="text/javascript"></script>
 		<script src="js/jquery/jquery.3.2.1.js"></script>
 		<script src="js/bootstrap/bootstrap.3.3.7.js"></script>
 		<link rel="stylesheet" href="js/bootstrap/bootstrap.3.3.7.css">
-		<link rel="stylesheet" href="style/style.css" />
-		
-		<script src="generated/data.js" type="text/javascript"></script>
 
-		<script src="js/moment.js" type="text/javascript"></script>
-		<script src="js/Chart.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="style/style.css" />		
+		<script src="generated/data.js" type="text/javascript"></script>
 		<script src="js/logic.js" type="text/javascript"></script>
 		
 		<script language="javascript">
@@ -26,38 +26,20 @@
 		    	<li class="active"><a data-toggle="pill" href="#home">Overview</a></li>
 		  	</ul>
 		  	<div class="tab-content">
-		    	<div id="home" class="tab-pane fade in active">
-					<center>
-						<h1 id="chatName"></h1>
-					</center>
-					<h3>Participants</h3>
+		    	<div id="home" class="tab-pane fade in active">					
+					<h3>Total number of messages: </h3><span id="totalNumMsgs"></span></p>
 					
-					<p><div id="participants"></div></p>
-					
-					<p><strong>Total number of messages: </strong><span id="totalNumMsgs"></span></p>
-					
-					<h3>Messages per user:</h3>
-					<canvas id="msgsPerUserChart" width="400" height="400"></canvas>
-					
-					<h3>Messages over time:</h3>
-					<canvas id="totalMsgsOverTimeChart" width="400" height="400"></canvas>			
-
-					<h3>Messages per month:</h3>
-					<canvas id="totalMsgsPerMonthChart" width="400" height="400"></canvas>
-
-					<h3>Messages per weekday:</h3>
-					<canvas id="totalMsgsPerWeekDayChart" width="400" height="400"></canvas>
-
-					<h3>Messages throughout the day:</h3>
-					<canvas id="totalMsgsPerTimeChart" width="400" height="400"></canvas>
+					<canvas id="msgsPerUserChart" width="760" height="760"></canvas>
+					<canvas id="totalMsgsOverTimeChart" width="760" height="760"></canvas>			
+					<canvas id="totalMsgsPerMonthChart" width="760" height="760"></canvas>
+					<canvas id="totalMsgsPerWeekDayChart" width="760" height="760"></canvas>
+					<canvas id="totalMsgsPerTimeChart" width="760" height="760"></canvas>
 
 					<h3>Most common words:</h3>
 					<ul id="mostCommonWords"></ul>
 
-					<canvas id="wordCloud" width="400" height="400"></canvas>
+					<canvas id="wordCloud" width="760" height="760"></canvas>
 				<script type="text/javascript">
-					setChatName();
-					setParticipants();
 					setTotalNumberOfMsgs();
 					setMessagesPerUser();
 					setTotalMsgsOverTime();
