@@ -1,12 +1,40 @@
 class Statistics {
-	constructor(numberOfMsgs, msgsOverTime, msgsPerMonth, msgsPerWeekday, msgsPerTime, mostCommonWords, wordCloud) {
+	constructor() {
+	}
+
+	setNumberOfMessages(numberOfMessages) {
 		this.numberOfMsgs = numberOfMsgs;
+		return this;
+	}
+
+	setMsgsOverTime(msgsOverTime) {
 		this.msgsOverTime = msgsOverTime;
+		return this;
+	}
+
+	setMsgsPerMonth(msgsPerMonth) {
 		this.msgsPerMonth = msgsPerMonth;
+		return this;
+	}
+
+	setMsgsPerWeekday(msgsPerWeekday) {
 		this.msgsPerWeekday = msgsPerWeekday;
+		return this;
+	}
+
+	setMsgsPerTime(msgsPerTime) {
 		this.msgsPerTime = msgsPerTime;
+		return this;
+	}
+
+	setMostCommonWords(mostCommonWords) {
 		this.mostCommonWords = mostCommonWords;
+		return this;
+	}
+
+	setWordCloud(wordCloud) {
 		this.wordCloud = wordCloud;
+		return this;
 	}
 
 	getNumberOfMsgs() {

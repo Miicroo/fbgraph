@@ -1,7 +1,10 @@
 class GeneralStatistics extends Statistics {
-	constructor(msgsPerUser, numberOfMsgs, msgsOverTime, msgsPerMonth, msgsPerWeekday, msgsPerTime, mostCommonWords, wordCloud) {
-		super(numberOfMsgs, msgsOverTime, msgsPerMonth, msgsPerWeekday, msgsPerTime, mostCommonWords, wordCloud);
+	constructor() {
+	}
+
+	setMsgsPerUser(msgsPerUser) {
 		this.msgsPerUser = msgsPerUser;
+		return this;
 	}
 
 	getMsgsPerUser() {

@@ -1,8 +1,7 @@
 class Backend {
-	constructor(generalStats, users, userStats) {
+	constructor(generalStats, userStatsList) {
 		this.generalStats = generalStats;
-		this.users = users;
-		this.userStats = userStats;
+		this.userStats = userStatsList;
 	}
 
 	getGeneralStatistics() {
@@ -10,7 +9,7 @@ class Backend {
 	}
 
 	getUsers() {
-		this.users;
+		return this.userStats.map(stats => stats.getUser());
 	}
 
 	getUserStatistics() {

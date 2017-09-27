@@ -81,59 +81,39 @@ class StatsSaver:
         with open(StatsSaver.FILE_NAME, 'w+') as f:
             f.write(self.__createJsContents__())
 
+    
     def __createJsContents__(self):
-        content = 'var backend = (function() {\n'
-        content += '\tvar self = {};\n\n'
-        content += '\tvar generalStats = '+json.dumps(self.generalStats)+';\n'
-        content += '\tvar userStats = '+json.dumps(self.userStats)+';\n\n'
-
-        content += self.__generateGettersForGeneralStats__()+'\n'
+        content = self.__generateGettersForGeneralStats__()+'\n'
         content += self.__generateGettersForUserStats__()+'\n'
-        
-        content += '\treturn self;\n'
-        content += '}());\n'
+        content += 'const backend = new Backend(generalStatistics, userStatsList);\n'
 
         return content
-
-    def __generateGettersForGeneralStats__(self):
-        getters = ''
-
-        getters += self.__generateGetter__(StatsSaver.CHATNAME, '', 'generalStats', StatsSaver.CHATNAME, '\'\'')
-        getters += self.__generateGetter__(StatsSaver.USERS, '', 'generalStats', StatsSaver.USERS, '[]')
-        getters += self.__generateGetter__(StatsSaver.TOTAL_NUM_MSGS, '', 'generalStats', StatsSaver.TOTAL_NUM_MSGS, '0')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_USER, '', 'generalStats', StatsSaver.MSGS_PER_USER, '[]')
-        getters += self.__generateGetter__(StatsSaver.MSGS_OVER_TIME, '', 'generalStats', StatsSaver.MSGS_OVER_TIME, '[]')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_MONTH, '', 'generalStats', StatsSaver.MSGS_PER_MONTH, '[]')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_WEEKDAY, '', 'generalStats', StatsSaver.MSGS_PER_WEEKDAY, '[]')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_TIME, '', 'generalStats', StatsSaver.MSGS_PER_TIME, '[]')
-        getters += self.__generateGetter__(StatsSaver.MOST_COMMON_WORDS, '', 'generalStats', StatsSaver.MOST_COMMON_WORDS, '[]')
-        getters += self.__generateGetter__(StatsSaver.WORD_CLOUD, '', 'generalStats', StatsSaver.WORD_CLOUD, '[]')
-
-        return getters
     
-    def __generateGetter__(self, name, params, container, variable, defaultValue=[]):
-        methodName = 'get' + name[0].upper() + name[1:]
-        containerVariable = container+'[\''+variable+'\']'
-        
-        method = '\tself.' + methodName + ' = function('+params+') {\n'
-        method += '\t\tif(typeof('+containerVariable+') === \'undefined\') {\n'
-        method += '\t\t\treturn '+str(defaultValue)+';\n'
-        method += '\t\t} else {\n'
-        method += '\t\t\treturn '+containerVariable+';\n'
-        method += '\t\t}\n'
-        method += '\t};\n\n'
+    def __generateGettersForGeneralStats__(self):
+        content = 'const generalStatistics = new GeneralStatistics()\n'
+        content += '\t.setMsgsPerUser(new LabelledData(' + json.dumps(self.generalStats[StatsSaver.MSGS_PER_USER]) + ', e => e.name, e => e.count))\n'
+        content += '\t.setNumberOfMessages(' + json.dumps(self.generalStats[StatsSaver.TOTAL_NUM_MSGS]) + ')\n'
+        content += '\t.setMsgsOverTime(new LabelledData(' + json.dumps(self.generalStats[StatsSaver.MSGS_OVER_TIME]) + ', e => e.date, e => e.count))\n'
+        content += '\t.setMsgsPerMonth(new LabelledData(' + json.dumps(self.generalStats[StatsSaver.MSGS_PER_MONTH]) + ', e => e.date, e => e.count))\n'
+        content += '\t.setMsgsPerWeekday(new LabelledData(' + json.dumps(self.generalStats[StatsSaver.MSGS_PER_WEEKDAY]) + ', e => e.date, e => e.count))\n'
+        content += '\t.setMsgsPerTime(new LabelledData(' + json.dumps(self.generalStats[StatsSaver.MSGS_PER_TIME]) + ', e => e.date, e => e.count))\n'
+        content += '\t.setMostCommonWords(new LabelledData(' + json.dumps(self.generalStats[StatsSaver.MOST_COMMON_WORDS]) + ', e => e.word, e => e.count))\n'
+        content += '\t.setWordCloud(new LabelledData(' + json.dumps(self.generalStats[StatsSaver.WORD_CLOUD]) + ', e => e.word, e => e.count));\n'
 
-        return method
-
+        return content
+    
     def __generateGettersForUserStats__(self):
-        getters = ''
-        
-        getters += self.__generateGetter__(StatsSaver.TOTAL_NUM_MSGS+'ForUser', 'userId', 'userStats[userId]', StatsSaver.TOTAL_NUM_MSGS, '0')
-        getters += self.__generateGetter__(StatsSaver.MSGS_OVER_TIME+'ForUser', 'userId', 'userStats[userId]', StatsSaver.MSGS_OVER_TIME, '[]')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_MONTH+'ForUser', 'userId', 'userStats[userId]', StatsSaver.MSGS_PER_MONTH, '[]')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_WEEKDAY+'ForUser', 'userId', 'userStats[userId]', StatsSaver.MSGS_PER_WEEKDAY, '[]')
-        getters += self.__generateGetter__(StatsSaver.MSGS_PER_TIME+'ForUser', 'userId', 'userStats[userId]', StatsSaver.MSGS_PER_TIME, '[]')
-        getters += self.__generateGetter__(StatsSaver.MOST_COMMON_WORDS+'ForUser', 'userId', 'userStats[userId]', StatsSaver.MOST_COMMON_WORDS, '[]')
-        getters += self.__generateGetter__(StatsSaver.WORD_CLOUD+'ForUser', 'userId', 'userStats[userId]', StatsSaver.WORD_CLOUD, '[]')
-
-        return getters
+        content = 'const userStatsList = [];\n'
+        for (index, user) in enumerate(self.generalStats[StatsSaver.USERS]):
+            user_id = user['id']
+            content += 'const user'+str(index)+' = new UserStatistics()\n'
+            content += '\t.setUser(' + json.dumps(user) + ')\n'
+            content += '\t.setNumberOfMessages(' + json.dumps(self.userStats[user_id][StatsSaver.TOTAL_NUM_MSGS]) + ')\n'
+            content += '\t.setMsgsOverTime(new LabelledData(' + json.dumps(self.userStats[user_id][StatsSaver.MSGS_OVER_TIME]) + ', e => e.date, e => e.count))\n'
+            content += '\t.setMsgsPerMonth(new LabelledData(' + json.dumps(self.userStats[user_id][StatsSaver.MSGS_PER_MONTH]) + ', e => e.date, e => e.count))\n'
+            content += '\t.setMsgsPerWeekday(new LabelledData(' + json.dumps(self.userStats[user_id][StatsSaver.MSGS_PER_WEEKDAY]) + ', e => e.date, e => e.count))\n'
+            content += '\t.setMsgsPerTime(new LabelledData(' + json.dumps(self.userStats[user_id][StatsSaver.MSGS_PER_TIME]) + ', e => e.date, e => e.count))\n'
+            content += '\t.setMostCommonWords(new LabelledData(' + json.dumps(self.userStats[user_id][StatsSaver.MOST_COMMON_WORDS]) + ', e => e.word, e => e.count))\n'
+            content += '\t.setWordCloud(new LabelledData(' + json.dumps(self.userStats[user_id][StatsSaver.WORD_CLOUD]) + ', e => e.word, e => e.count));\n'
+            content += 'userStatsList.push(user'+str(index)+');\n'
+        return content
