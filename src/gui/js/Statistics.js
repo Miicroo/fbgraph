@@ -2,7 +2,7 @@ class Statistics {
 	constructor() {
 	}
 
-	setNumberOfMessages(numberOfMessages) {
+	setNumberOfMessages(numberOfMsgs) {
 		this.numberOfMsgs = numberOfMsgs;
 		return this;
 	}
@@ -37,7 +37,7 @@ class Statistics {
 		return this;
 	}
 
-	getNumberOfMsgs() {
+	getNumberOfMessages() {
 		return this.numberOfMsgs;
 	}
 

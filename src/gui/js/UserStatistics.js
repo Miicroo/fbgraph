@@ -1,5 +1,6 @@
 class UserStatistics extends Statistics {
 	constructor() {
+		super();
 	}
 
 	setUser(user) {

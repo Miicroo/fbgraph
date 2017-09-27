@@ -1,5 +1,6 @@
 class GeneralStatistics extends Statistics {
 	constructor() {
+		super();
 	}
 
 	setMsgsPerUser(msgsPerUser) {
