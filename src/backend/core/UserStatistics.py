@@ -28,11 +28,14 @@ class UserStatistics(object):
         
     def setUser(self, user):
         self.user = user
+
+    def getUserId(self):
+        return 'x'+self.user['id'].replace('%', '')
     
     def __repr__(self):
-        content = 'const '+user['id']+' = new UserStatistics()\n'
+        content = 'const '+self.getUserId()+' = new UserStatistics()\n'
         content += '\t.setUser(' + json.dumps(self.user) + ')\n'
-        content += '\t.setNumberOfMessages(' + json.dumps(self.totalOfMessages) + ')\n'
+        content += '\t.setNumberOfMessages(' + json.dumps(self.totalNumberOfMessages) + ')\n'
         content += '\t.setMsgsOverTime(new LabelledData(' + json.dumps(self.messagesOverTime) + ', e => e.date, e => e.count))\n'
         content += '\t.setMsgsPerMonth(new LabelledData(' + json.dumps(self.messagesPerMonth) + ', e => e.date, e => e.count))\n'
         content += '\t.setMsgsPerWeekday(new LabelledData(' + json.dumps(self.messagesPerWeekday) + ', e => e.date, e => e.count))\n'

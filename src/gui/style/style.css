@@ -23,11 +23,11 @@ strong{
 #content{
 	background-color: #fff;
 	border-radius: 10px;
+    width: 90%;
 }
 
 .center {
     margin: auto;
-    width: 50%;
     padding: 10px;
 }
 

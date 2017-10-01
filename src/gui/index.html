@@ -34,9 +34,17 @@
 		  	</ul>
 		  	<div class="tab-content">
 		    	<div id="home" class="tab-pane fade in active">					
-					<h3>Total number of messages: </h3><span id="totalNumMsgs"></span></p>
-					
-					<canvas id="msgsPerUserChart" width="760" height="760"></canvas>
+					<h3><span id="totalNumMsgs"></span> messages</h3>
+
+					<script type="text/javascript">
+						const container = document.querySelector('#home');
+						const userMsgsCanvas = document.createElement('canvas');
+						userMsgsCanvas.id = 'msgsPerUserChart';
+						userMsgsCanvas.style.width = container.clientWidth * 0.95;
+						userMsgsCanvas.style.height = backend.getUsers().length * 100;
+
+						container.appendChild(userMsgsCanvas);
+					</script>
 					<canvas id="totalMsgsOverTimeChart" width="760" height="760"></canvas>			
 					<canvas id="totalMsgsPerMonthChart" width="760" height="760"></canvas>
 					<canvas id="totalMsgsPerWeekDayChart" width="760" height="760"></canvas>

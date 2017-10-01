@@ -27,7 +27,7 @@ class GeneralStatistics(object):
         self.wordCloud = wordCloud
         
     def setTotalNumberOfMessagesForUser(self, userId, numMsgs):
-        self.msgsPerUser.append({'id':userId, 'count':numMsgs})
+        self.msgsPerUser.append({'name':userId, 'count':numMsgs})
     
     def __repr__(self):
         content = 'const generalStatistics = new GeneralStatistics()\n'
