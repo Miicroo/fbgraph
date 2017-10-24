@@ -8,8 +8,13 @@ body {
 	font-size: 18pt;
 }
 
+.group, .radiobuttonGroup {
+	border: 1px dashed #666666;
+	display: inline-block;
+}
+
 .subgroup {
-	margin: 10px;
+	margin: 10px 10px 20px 10px;
 }
 
 .groupHeader {
@@ -32,3 +37,4 @@ body {
 .selected {
 	background-color: #aaaaaa;
 }
+
