@@ -1,0 +1,31 @@
+@font-face {
+	font-family: Trench;
+	src: url('trench100free.otf');
+}
+
+body {
+	font-family: Trench, sans-serif;
+}
+
+.subgroup {
+	margin: 10px;
+}
+
+.groupHeader {
+	padding-bottom: 5px;
+}
+
+.groupItem {
+	padding: 2px 5px 2px 5px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.groupItem:hover {
+	cursor: pointer;
+	background-color: #cccccc;
+}
+
+.selected {
+	background-color: #aaaaaa;
+}
