@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<title>Test</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div>
+			<span class="group">
+				<div class="subgroup">
+					<span class="groupHeader">Users</span><br />
+					<span class="groupItem">All</span>
+					<span class="groupItem">Test1</span>
+					<span class="groupItem">Test2</span>
+					<span class="groupItem">Test3</span>
+					<span class="groupItem">Test4</span>
+				</div>
+			</span>
+			<span class="radiobuttonGroup">
+				<div class="subgroup">
+					<span class="groupHeader">Count</span><br />
+					<span class="groupItem">Number of messages</span>
+				</div>
+
+				<div class="subgroup">
+					<span class="groupHeader">Messages aggregated over time</span><br />
+					<span class="groupItem">Timestamp</span>
+					<span class="groupItem">Month</span>
+				</div>
+
+				<div class="subgroup">
+					<span class="groupHeader">Messages grouped by</span><br />
+					<span class="groupItem">Minute (should be hour)</span>
+					<span class="groupItem">Weekday</span>
+				</div>
+
+				<div class="subgroup">
+					<span class="groupHeader">Words</span><br />
+					<span class="groupItem">Word cloud</span>
+					<span class="groupItem">Most common words</span>
+				</div>
+			</span>
+		</div>
+		<script type="text/javascript">
+			
+			function addListenersForGroups() {
+				Array.from(document.querySelectorAll('.group .groupItem'))
+					.forEach(item => item.addEventListener('click', e => {
+						item.classList.toggle('selected');
+					})
+				);
+			}
+
+			function addListenersForRadiobuttonGroups() {
+				const radiobuttonGroups = Array.from(document.querySelectorAll('.radiobuttonGroup'));
+
+				radiobuttonGroups.forEach(group => {
+					const items = group.querySelectorAll('.groupItem');
+					items.forEach(item => item.addEventListener('click', e => {
+							item.classList.toggle('selected');
+							items.forEach(otherItem => {
+								if( otherItem !== item) {
+									otherItem.classList.remove('selected');
+								}
+							});
+						})
+					);
+				});
+			}
+
+			addListenersForGroups();
+			addListenersForRadiobuttonGroups();
+		</script>
+	</body>
+</html>
+
+<!--
+	NOTES:
+
+	Count:
+	number of messages
+
+	Messages of all times displayed as:
+	msgs over time (from timestamp to timestamp)
+	msgs per month (same as above but queried per month instead of minute?)
+
+	Messages collected as:
+	msgs per weekday
+	msgs per minute
+
+	Words:
+	common words
+	wordcloud
+
+-->
