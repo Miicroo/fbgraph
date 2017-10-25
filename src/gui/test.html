@@ -2,6 +2,7 @@
 	<head>
 		<title>Test</title>
 		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="rx.js"></script>
 	</head>
 	<body>
 		<div>
@@ -44,13 +45,15 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-			
-			function addListenersForGroups() {
-				Array.from(document.querySelectorAll('.group .groupItem'))
-					.forEach(item => item.addEventListener('click', e => {
-						item.classList.toggle('selected');
-					})
-				);
+
+			function addListenersForGroups() {	
+				getRequestStreamForUserClick()
+					.subscribe((event) => event.srcElement.classList.toggle('selected'));
+			}
+
+			function getRequestStreamForUserClick() {
+  				const groupItems = Array.from(document.querySelectorAll('.group .groupItem'));
+				return Rx.Observable.merge(groupItems.map(item => Rx.Observable.fromEvent(item, 'click')));
 			}
 
 			function addListenersForRadiobuttonGroups() {
