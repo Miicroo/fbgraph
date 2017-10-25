@@ -75,6 +75,7 @@
 
 			addListenersForGroups();
 			addListenersForRadiobuttonGroups();
+			getRequestStreamForUserClick().subscribe((event) => console.log(`Someone clicked ${event.srcElement.innerText}!`));
 		</script>
 	</body>
 </html>
