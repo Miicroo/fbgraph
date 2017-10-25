@@ -16,5 +16,5 @@ fbgraph is a messaging statistics app for facebook chats.
 ## Credit
 Though modified, the data parser uses code from [CopOnTheRun's FB-Message-Parser](https://github.com/CopOnTheRun/FB-Message-Parser)
 
-## Simiar projects  
+## Similar projects  
 If you liked this project you are probably gonna like [this project](https://defaultnamehere.tumblr.com/post/139351766005/graphing-when-your-facebook-friends-are-awake) about snffing locations from facebook by [defaultnamehere](https://github.com/defaultnamehere) even more.
