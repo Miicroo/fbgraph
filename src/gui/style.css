@@ -1,11 +1,7 @@
-@font-face {
-	font-family: Trench;
-	src: url('trench100free.otf');
-}
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
 body {
-	font-family: Trench, sans-serif;
-	font-size: 18pt;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 .group, .radiobuttonGroup {
@@ -21,12 +17,14 @@ body {
 	padding-bottom: 5px;
 	text-transform: uppercase;
 	font-weight: bold;
+	font-size: 10pt;
 }
 
 .groupItem {
 	padding: 2px 5px 2px 5px;
 	border: 1px solid black;
 	border-radius: 5px;
+	font-size: 12pt;
 }
 
 .groupItem:hover {
