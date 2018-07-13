@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @RestController
 @RequestMapping("/api")
 public class RestApiController {
@@ -17,6 +19,6 @@ public class RestApiController {
 
   @GetMapping("/users")
   public Flux<String> getUsers() {
-    return Flux.just("Kalle", "Adam", "Lisa");
+    return Flux.just("Kalle", "Adam", "Lisa").delayElements(Duration.ofSeconds(1));
   }
 }
