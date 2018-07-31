@@ -1,4 +1,4 @@
-package com.github.miicroo.fbgraphjar.ql;
+package com.github.miicroo.fbgraphjar.querylanguage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,13 +12,13 @@ public class Grouper {
     this.objects = objects;
   }
 
-  public <T> Map<Object, List<DataElement>> groupBy(T identifier) {
+  public <T> Map<Object, List<DataElement>> groupBy(GrouperFilter filter) {
     Map<Object, List<DataElement>> result = new HashMap<>();
 
     objects.stream()
-      .filter(element -> matches(element, identifier))
+      .filter(filter::accepts)
       .forEach(element -> {
-        T groupIdentifier = (T) element.get(identifier);
+        Object groupIdentifier = filter.getIdentifier(element);
 
         List<DataElement> existingElements = result.getOrDefault(groupIdentifier, new ArrayList<>());
         existingElements.add(element);
@@ -27,9 +27,5 @@ public class Grouper {
       });
 
     return result;
-  }
-
-  private <T> boolean matches(DataElement element, T identifier) {
-    return element.containsKey(identifier);
   }
 }

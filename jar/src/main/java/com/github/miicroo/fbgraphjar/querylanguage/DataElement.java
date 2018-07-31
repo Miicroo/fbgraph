@@ -1,4 +1,4 @@
-package com.github.miicroo.fbgraphjar.ql;
+package com.github.miicroo.fbgraphjar.querylanguage;
 
 import java.util.HashMap;
 import java.util.List;

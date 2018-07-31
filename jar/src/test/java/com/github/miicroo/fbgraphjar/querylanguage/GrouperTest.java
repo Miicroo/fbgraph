@@ -1,6 +1,6 @@
-package com.github.miicroo.fbgraphjar.ql;
+package com.github.miicroo.fbgraphjar.querylanguage;
 
-import com.github.miicroo.fbgraphjar.ql.DataElement.Tuple;
+import com.github.miicroo.fbgraphjar.querylanguage.DataElement.Tuple;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,17 @@ public class GrouperTest {
   @Test
   public void groupByExistingIdentifier() {
     Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy("name");
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+      @Override
+      public boolean accepts(DataElement element) {
+        return element.containsKey("name");
+      }
+
+      @Override
+      public Object getIdentifier(DataElement element) {
+        return element.get("name");
+      }
+    });
 
     assertEquals(group.keySet().size(), 3);
 
@@ -44,7 +54,17 @@ public class GrouperTest {
   @Test
   public void groupByExistingNumberIdentifier() {
     Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy(1);
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+      @Override
+      public boolean accepts(DataElement element) {
+        return element.containsKey(1);
+      }
+
+      @Override
+      public Object getIdentifier(DataElement element) {
+        return element.get(1);
+      }
+    });
 
     assertEquals(group.keySet().size(), 1);
     assertEquals(group.get("This is new").size(), 1);
@@ -53,7 +73,17 @@ public class GrouperTest {
   @Test
   public void groupByNonExistingIdentifier() {
     Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy("THIS_DOES_NOT_EXIST");
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+      @Override
+      public boolean accepts(DataElement element) {
+        return element.containsKey("THIS_DOES_NOT_EXIST");
+      }
+
+      @Override
+      public Object getIdentifier(DataElement element) {
+        return element.get("THIS_DOES_NOT_EXIST");
+      }
+    });
 
     assertEquals(group.keySet().size(), 0);
   }
@@ -61,7 +91,17 @@ public class GrouperTest {
   @Test
   public void groupByNull() {
     Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy(null);
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+      @Override
+      public boolean accepts(DataElement element) {
+        return element.containsKey(null);
+      }
+
+      @Override
+      public Object getIdentifier(DataElement element) {
+        return element.get(null);
+      }
+    });
 
     assertEquals(group.keySet().size(), 0);
   }
