@@ -1,7 +1,7 @@
 package com.github.miicroo.fbgraphjar.querylanguage;
 
-public interface GrouperFilter {
+public interface GrouperFilter<T> {
 
-    boolean accepts(DataElement element);
-    Object getIdentifier(DataElement element);
+    boolean accepts(T element);
+    Object getIdentifier(T element);
 }

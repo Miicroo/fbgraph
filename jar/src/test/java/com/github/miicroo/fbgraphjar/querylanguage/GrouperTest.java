@@ -31,8 +31,8 @@ public class GrouperTest {
 
   @Test
   public void groupByExistingIdentifier() {
-    Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+    Grouper<DataElement> testee = new Grouper<>(objects);
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter<DataElement>() {
       @Override
       public boolean accepts(DataElement element) {
         return element.containsKey("name");
@@ -53,8 +53,8 @@ public class GrouperTest {
 
   @Test
   public void groupByExistingNumberIdentifier() {
-    Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+    Grouper<DataElement> testee = new Grouper<>(objects);
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter<DataElement>() {
       @Override
       public boolean accepts(DataElement element) {
         return element.containsKey(1);
@@ -72,8 +72,8 @@ public class GrouperTest {
 
   @Test
   public void groupByNonExistingIdentifier() {
-    Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+    Grouper<DataElement> testee = new Grouper<>(objects);
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter<DataElement>() {
       @Override
       public boolean accepts(DataElement element) {
         return element.containsKey("THIS_DOES_NOT_EXIST");
@@ -90,8 +90,8 @@ public class GrouperTest {
 
   @Test
   public void groupByNull() {
-    Grouper testee = new Grouper(objects);
-    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter() {
+    Grouper<DataElement> testee = new Grouper<>(objects);
+    Map<Object, List<DataElement>> group = testee.groupBy(new GrouperFilter<DataElement>() {
       @Override
       public boolean accepts(DataElement element) {
         return element.containsKey(null);
