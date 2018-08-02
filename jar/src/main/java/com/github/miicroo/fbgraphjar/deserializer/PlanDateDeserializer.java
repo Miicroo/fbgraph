@@ -1,4 +1,4 @@
-package com.github.miicroo.fbgraphjar.datamodel;
+package com.github.miicroo.fbgraphjar.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

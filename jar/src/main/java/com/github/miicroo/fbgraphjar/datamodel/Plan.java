@@ -1,6 +1,7 @@
 package com.github.miicroo.fbgraphjar.datamodel;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.miicroo.fbgraphjar.deserializer.PlanDateDeserializer;
 
 import java.time.Instant;
 
