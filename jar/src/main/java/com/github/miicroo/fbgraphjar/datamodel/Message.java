@@ -2,6 +2,7 @@ package com.github.miicroo.fbgraphjar.datamodel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.miicroo.fbgraphjar.datamodel.multimedia.*;
+import com.github.miicroo.fbgraphjar.util.StringUtil;
 
 import java.time.Instant;
 
@@ -51,7 +52,7 @@ public class Message {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = StringUtil.convertLatin1JsonToUtf8(content);
     }
 
     public String getType() {
